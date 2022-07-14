@@ -30,7 +30,7 @@ public class StudentController {
             return "Not Added ";
     }
     // Post method with ResponseEntity status, here we are creating the URI-location for newly created record
-    @PostMapping("/addNewStudent")
+    @PostMapping("/addNewStudentWithLocation")
     ResponseEntity<?> addNewStudent(@RequestBody Student student){
 
         Student newStudent = studentService.saveStudent(student);
