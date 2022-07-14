@@ -23,7 +23,7 @@ public class StudentController {
     public String addStudent(@RequestBody Student student) {
         Student newStudent = studentService.saveStudent(student);
         if (newStudent != null) {
-            return "New Student is added";
+            return "New Student is added::"+student.getId();
         } else
             return "Not Added ";
     }
@@ -63,14 +63,14 @@ public class StudentController {
 
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .buildAndExpand(studentId).toUri();
-            System.out.println("Location ::" + location);
+            System.out.println("Location ::" + ResponseEntity.created(location).build());
             return new ResponseEntity<Student>(oneStudent, HttpStatus.OK);
 
         } catch (NoSuchElementException e) {
 
             URI location1 = ServletUriComponentsBuilder.fromCurrentRequest()
                     .buildAndExpand(studentId).toUri();
-            System.out.println("Location ::" + location1);
+            System.out.println("Location ::" + ResponseEntity.created(location1).build());
             return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
         }
     }
@@ -87,7 +87,7 @@ public class StudentController {
             studentService.updateStudent(studentId);
             studentService.saveStudent(student);
 
-            System.out.println("Updated URI::" + updateURI);
+            System.out.println("Updated URI::" + ResponseEntity.created(updateURI).build());
 
             return new ResponseEntity<Student>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -101,9 +101,9 @@ public class StudentController {
     @DeleteMapping("deleteWithHttpStatus/{studentId}")
     public ResponseEntity<Student> deleteOneStudent(@RequestBody Student student, @PathVariable Integer studentId) {
         URI delUriLoc = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(studentId).toUri();
-        System.out.println("Deleted URI::" + delUriLoc);
-        int id = student.getId();
-        if (id == studentId) {
+        System.out.println("Deleted URI::" + ResponseEntity.created(delUriLoc).build() +" id ::::" + studentId);
+
+        if (studentId == student.getId()) {
             try {
                 studentService.deleteOneStudent(studentId);
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -113,5 +113,10 @@ public class StudentController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @DeleteMapping("delById/{studentId}")
+    public String deleteOneStudent1(@RequestBody Student student, @PathVariable Integer studentId){
+        studentService.deleteOneStudent(studentId);
+        return "The deleted record id is::" +studentId;
     }
 }
