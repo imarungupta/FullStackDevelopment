@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface StudentServiceInterface  {
     public Student saveStudent(Student student);
-    public List<Student> findAllStudent();
-    public Student findOneStudent(int id);
+    public List<Student> getAllStudent();
+    public Student getOneStudent(int id);
+    public void updateStudent(int id);
+    public void deleteOneStudent(int id);
 }

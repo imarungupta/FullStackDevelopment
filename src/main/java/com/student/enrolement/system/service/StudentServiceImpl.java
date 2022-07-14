@@ -19,11 +19,24 @@ public class StudentServiceImpl implements StudentServiceInterface{
         return saveStudentRecord;
     }
     @Override
-    public List<Student> findAllStudent() {
-        return null;
+    public List<Student> getAllStudent() {
+        List<Student> studentList = studentRepositoryInterface.findAll();
+        return studentList;
+    }
+
+    @Override
+    public Student getOneStudent(int studentId) {
+        Student getOneStudentDetail = studentRepositoryInterface.findById(studentId).get();
+        return getOneStudentDetail;
     }
     @Override
-    public Student findOneStudent(int id) {
-        return null;
+    public void  updateStudent(int id) {
+        studentRepositoryInterface.findById(id);
     }
+    @Override
+    public void deleteOneStudent(int id) {
+        studentRepositoryInterface.deleteById(id);
+    }
+
+
 }
