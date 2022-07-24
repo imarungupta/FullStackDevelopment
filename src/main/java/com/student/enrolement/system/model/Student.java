@@ -1,18 +1,28 @@
 package com.student.enrolement.system.model;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Objects;
-
-@Entity(name = "StudentTable")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table(name = "Student_Table")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private String name;
+    @NotNull
+    @Column(name = "address")
     private String address;
 
-    public Student() {
+    /*public Student() {
     }
 
     public Student(int id, String name, String address) {
@@ -65,5 +75,5 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 '}';
-    }
+    }*/
 }

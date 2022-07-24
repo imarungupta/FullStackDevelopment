@@ -2,7 +2,9 @@ package com.student.enrolement.system.controller;
 
 import com.student.enrolement.system.model.Student;
 import com.student.enrolement.system.service.StudentServiceImpl;
+import com.student.enrolement.system.service.TestBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,14 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin
+@Scope("prototype")
 public class StudentController {
     @Autowired
     private StudentServiceImpl studentService;
+
+    @Autowired
+    private TestBean testBean;
 
     //-------------------------------Create-------------------------------------------------------------
     @PostMapping("/add")
@@ -30,6 +37,7 @@ public class StudentController {
     //-----------------------------Create With Http Status----------------------------------------------
     // Post method with ResponseEntity status, here we are creating the URI-location for newly created record
     @PostMapping("/addNewStudentWithLocation")
+    @RequestMapping(value = "/save",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")
     ResponseEntity<?> addNewStudent(@RequestBody Student student) {
 
         Student newStudent = studentService.saveStudent(student);
@@ -47,6 +55,7 @@ public class StudentController {
     @GetMapping("/getAllStudent")
     public List<Student> getStudentList() {
         List<Student> allStudent = studentService.getAllStudent();
+        System.out.println("Custom Properties::"+testBean);
         return allStudent;
     }
     //------------------------------Simple Read Operation by id-------------------------------------------------
